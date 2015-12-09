@@ -8,7 +8,7 @@ public class StreamcloudProviderFactory extends ProviderFactory
 {
 	public StreamcloudProviderFactory()
 	{
-		parallelism = 10;
+		parallelism = 2;
 	}
 
 	@Override
@@ -22,7 +22,11 @@ public class StreamcloudProviderFactory extends ProviderFactory
 		{
 			System.err.println("Error working...");
 			e.printStackTrace();
-			providerJob.provider.status = Status.ERROR;
+			providerJob.provider.errorCount++;
+			if (providerJob.provider.errorCount > 20)
+				providerJob.provider.status = Status.ERROR;
+			else
+				providerJob.provider.status = Status.UNWORKED;
 		}
 	}
 }

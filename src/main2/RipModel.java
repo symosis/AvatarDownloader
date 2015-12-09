@@ -34,7 +34,7 @@ public class RipModel
 
 		boolean quitIfOneSuccess = true;
 		if (quitIfOneSuccess)
-			if (choosen.getCompleted() > 0)
+			if (choosen != null && choosen.getCompleted() > 0)
 				return null;
 
 		if (choosen == null)

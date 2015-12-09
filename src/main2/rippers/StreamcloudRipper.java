@@ -151,13 +151,14 @@ public class StreamcloudRipper
 			n2 += n;
 			long dt = System.currentTimeMillis() - last;
 
-			if (dt > 1000)
+			long reportMs = 5000;
+			if (dt > reportMs)
 			{
 				double dts = dt / 1000.0;
 				double nkb = n2 / 1024.0;
 				double totalMB = bytesRead / 1024.0 / 1024.0;
 				System.out.println(url2 + " ("
-						+ totalMB + " mb) kb/s:" + nkb / dts);
+						+ totalMB + " mb) kb/s:" + nkb / dts + " to " + name);
 				n2 = 0;
 				last = System.currentTimeMillis();
 			}

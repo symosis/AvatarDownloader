@@ -37,7 +37,6 @@ public class ProviderWorker
 	{
 		ExecutorService pool = Executors.newFixedThreadPool(providerFactory.parallelism);
 
-		System.out.println("XXXXX");
 		Boolean running = true;
 		while (running)
 		{

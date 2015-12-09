@@ -54,13 +54,15 @@ public class RipManager
 			con.userAgent(Main3.USER_AGENT);
 
 			Document doc = con.get();
-			Elements links = doc.select(".buttonlink");
+			Elements links = doc.select(".tab-english .buttonlink");
 			int index = 0;
 			for (Element link : links)
 			{
 				episode.addCale(index, "http://watchseries.ag" + link.attr("href"), link.attr("title"));
 				index++;
 			}
+			
+			System.out.println("INDEX: " + index);
 		}
 		catch (Throwable e)
 		{

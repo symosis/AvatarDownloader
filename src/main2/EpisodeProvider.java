@@ -15,6 +15,7 @@ public class EpisodeProvider
 	public String providerId;
 	public Status status = Status.UNWORKED;
 	public int index;
+	public int errorCount = 0;
 
 	public EpisodeProvider(int index, String providerId, String caleHref, Episode episode)
 	{
@@ -33,7 +34,7 @@ public class EpisodeProvider
 	public String getFileName()
 	{
 		String name = episode.name;
-		return "download/" + name + "-" + providerId + "-" + index + ".mp4";
+		return "/plex/Series/" + name + "-" + providerId + "-" + index + ".mp4";
 	}
 
 }

@@ -12,12 +12,15 @@ public class Main3
 		RipManager manager = new RipManager();
 		manager.model = new RipModel();
 
-		// addEpisode(manager, 1);
+		// addEpisode(manager, 20, 3);
 		// addEpisode(manager, 10);
 
-		for (int i = 1; i <= 30; i++)
+		for (int season = 1; season <= 4; season++)
 		{
-			addEpisode(manager, i);
+		for (int episode = 1; episode <= 30; episode++)
+		{
+			addEpisode(manager, episode, season);
+		}
 		}
 
 		manager.getProviderUrls();
@@ -29,16 +32,17 @@ public class Main3
 		new ProviderWorker(manager.model, "vidup.me", new VidupmeProviderFactory()).start();
 	}
 
-	private static void addEpisode(RipManager manager, int i)
+	private static void addEpisode(RipManager manager, int episode, int seasonInt)
 	{
-		String season = "1";
-		String period = "s" + season + "_e" + i;
+		String season = "" + seasonInt;
+		String period = "s" + season + "_e" + episode;
 
-		String iName = "" + i;
+		String iName = "" + episode;
 		if (iName.length() < 2)
 			iName = "0" + iName;
 		String periodName = "s" + season + "_e" + iName;
 //		manager.model.addEpisode("big_bang_theory_" + periodName, "http://watchseries.ag/episode/big_bang_theory_" + period + ".html");
-		manager.model.addEpisode("avatar_" + periodName, "http://watchseries.ag/episode/avatar:_the_last_airbender_" + period + ".html");
+		manager.model.addEpisode("korra_" + periodName, "http://watchseries.ag/episode/the_legend_of_korra_" + period + ".html");
+//		manager.model.addEpisode("avatar_" + periodName, "http://watchseries.ag/episode/avatar:_the_last_airbender_" + period + ".html");
 	}
 }
