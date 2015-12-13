@@ -14,6 +14,9 @@ public class Main3 {
         manager.model.name = "z-nation_";
         manager.model.url = "http://watchseries.ag/episode/z-nation-_";
 
+//        manager.model.name = "you_are_the_worst_";
+//        manager.model.url = "http://watchseries.ag/episode/You_re_the_Worst_";
+
 //        addEpisode(manager, 1, 1);
         for (int season = 1; season <= 4; season++) {
             for (int episode = 1; episode <= 30; episode++) {
@@ -25,8 +28,8 @@ public class Main3 {
         System.out.println("Complete Provider Cale Urls");
 
         new ProviderWorker(manager.model, "happystreams", new HappystreamsProviderFactory()).start();
-        new ProviderWorker(manager.model, "streamcloud", new StreamcloudProviderFactory()).start();
-        new ProviderWorker(manager.model, "vidup.me", new VidupmeProviderFactory()).start();
+//        new ProviderWorker(manager.model, "streamcloud", new StreamcloudProviderFactory()).start();
+//        new ProviderWorker(manager.model, "vidup.me", new VidupmeProviderFactory()).start();
     }
 
     private static void addEpisode(RipManager manager, int seasonInt, int episode) {
