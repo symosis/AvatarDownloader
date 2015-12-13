@@ -1,9 +1,8 @@
-package main2.rippers;
+package main.rippers;
 
-import main2.EpisodeProvider.Status;
-import main2.FindUrls;
-import main2.Main3;
-import main2.ProviderJob;
+import main.EpisodeProvider.Status;
+import main.Main3;
+import main.ProviderJob;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,10 +11,8 @@ import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.List;
 
 public class HappystreamsRipper {
     private ProviderJob providerJob;
@@ -95,48 +92,40 @@ public class HappystreamsRipper {
         while ((line = rd.readLine()) != null) {
 
             if (line.indexOf("<span id='vplayer'><img src=") != -1) {
-                System.out.println("**** SERVER: " + line);
+//                System.out.println("**** SERVER: " + line);
                 String ipSearch = "http://";
                 int indexA = line.indexOf(ipSearch);
                 int from = indexA + ipSearch.length();
                 hostPort = line.substring(from,
                         line.indexOf("/", from));
-                System.out.println("**** hostPort: " + hostPort);
+//                System.out.println("**** hostPort: " + hostPort);
 
             }
             if (line.indexOf("|flv|") != -1) {
-                System.out.println("**** finding url in line: " + line);
-                System.out.println(line);
+//                System.out.println("**** finding url in line: " + line);
+//                System.out.println(line);
                 String searchA = "|flv|";
                 int indexA = line.indexOf(searchA);
                 int indexB = line.indexOf("|file|");
 
                 String dlId = line.substring(indexA + searchA.length(),
                         indexB);
-                System.out.println("**** dlId: " + dlId);
-
-                // http://89.46.102.246:8777/ouw2gsrlj7awvk4say6gx3vbmh4r2ukpm3iy3paimr4y4ra2oz25sxgwgwda/v.flv?start=0
-                // http://89.46.102.246:8777/ouw2gsrlj7awvk4say6gx3vbmh4r2ukpm3iy3paimr4y4ra2oz25sxgwgwda/v.flv?start=0
-                // http://94.176.148.18:8777/o4w2hmlmj7awvk4say6gxz5xngwk6mbivywz37idjrz5safohlaqpoyxsagq/v.flv?start=0
+//                System.out.println("**** dlId: " + dlId);
 
                 flv = dlId;
 
                 break;
             }
             if (line.indexOf("|mp4|") != -1) {
-                System.out.println("**** finding url in line: " + line);
-                System.out.println(line);
+//                System.out.println("**** finding url in line: " + line);
+//                System.out.println(line);
                 String searchA = "|mp4|";
                 int indexA = line.indexOf(searchA);
                 int indexB = line.indexOf("|file|");
 
                 String dlId = line.substring(indexA + searchA.length(),
                         indexB);
-                System.out.println("**** dlId: " + dlId);
-
-                // http://89.46.102.246:8777/ouw2gsrlj7awvk4say6gx3vbmh4r2ukpm3iy3paimr4y4ra2oz25sxgwgwda/v.flv?start=0
-                // http://89.46.102.246:8777/ouw2gsrlj7awvk4say6gx3vbmh4r2ukpm3iy3paimr4y4ra2oz25sxgwgwda/v.flv?start=0
-                // http://94.176.148.18:8777/o4w2hmlmj7awvk4say6gxz5xngwk6mbivywz37idjrz5safohlaqpoyxsagq/v.flv?start=0
+//                System.out.println("**** dlId: " + dlId);
 
                 mp4 = dlId;
 
@@ -146,48 +135,17 @@ public class HappystreamsRipper {
         rd.close();
 
 
-        if (flv != null)
-            download(providerJob.provider.getFileName(), providerUrl, "http://" + hostPort + "/" + flv
+        if (flv != null) {
+            providerJob.provider.download("flv", "http://" + hostPort + "/" + flv
                     + "/v.flv?start=0");
-    }
-
-    private void download(final String name, final String providerHref, final String url2) throws MalformedURLException, IOException, FileNotFoundException {
-        System.out.println("Start:" + url2);
-        URL url = new URL(url2);
-        HttpURLConnection connection = (HttpURLConnection) url
-                .openConnection();
-        connection
-                .setRequestProperty(
-                        "User-Agent",
-                        Main3.USER_AGENT);
-        InputStream input = connection.getInputStream();
-        byte[] buffer = new byte[1024 * 50];
-        int n = -1;
-
-        OutputStream output = new FileOutputStream(new File(name));
-
-        int bytesRead = 0;
-        int n2 = 0;
-        long last = System.currentTimeMillis();
-        while ((n = input.read(buffer)) != -1) {
-            bytesRead += n;
-            n2 += n;
-            long dt = System.currentTimeMillis() - last;
-
-            long reportMs = 5000;
-            if (dt > reportMs) {
-                double dts = dt / 1000.0;
-                double nkb = n2 / 1024.0;
-                double totalMB = bytesRead / 1024.0 / 1024.0;
-                System.out.println(url2 + " ("
-                        + totalMB + " mb) kb/s:" + nkb / dts + " to " + name);
-                n2 = 0;
-                last = System.currentTimeMillis();
-            }
-            output.write(buffer, 0, n);
         }
-        output.close();
-        System.out.println("Done:" + url2 + " " + Math.round(bytesRead / 1024.0 / 1024.0) + " mb");
+        else if (mp4 != null) {
+            providerJob.provider.download("mp4", "http://" + hostPort + "/" + mp4
+                    + "/v.flv?start=0");
+        }
+        else
+        {
+            throw new Error("nothing found...");
+        }
     }
-
 }

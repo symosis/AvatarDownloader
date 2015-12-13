@@ -1,9 +1,9 @@
-package main2.rippers;
+package main.rippers;
 
-import main2.EpisodeProvider.Status;
-import main2.FindUrls;
-import main2.Main3;
-import main2.ProviderJob;
+import main.EpisodeProvider.Status;
+import main.FindUrls;
+import main.Main3;
+import main.ProviderJob;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,7 +12,6 @@ import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
@@ -101,49 +100,9 @@ public class StreamcloudRipper {
         List<String> urls = FindUrls.extractMp4Urls(s.toString());
 
         if (urls.size() > 0) {
-            download(providerJob.provider.getFileName(), providerUrl, urls.get(0));
+            providerJob.provider.download("mp4", urls.get(0));
         } else {
             throw new Error("MP4 Url not there");
         }
     }
-
-    private void download(final String name, final String providerHref, final String url2) throws MalformedURLException, IOException, FileNotFoundException {
-        System.out.println("Start:" + url2);
-        URL url = new URL(url2);
-        HttpURLConnection connection = (HttpURLConnection) url
-                .openConnection();
-        connection
-                .setRequestProperty(
-                        "User-Agent",
-                        Main3.USER_AGENT);
-        InputStream input = connection.getInputStream();
-        byte[] buffer = new byte[1024 * 50];
-        int n = -1;
-
-        OutputStream output = new FileOutputStream(new File(name));
-
-        int bytesRead = 0;
-        int n2 = 0;
-        long last = System.currentTimeMillis();
-        while ((n = input.read(buffer)) != -1) {
-            bytesRead += n;
-            n2 += n;
-            long dt = System.currentTimeMillis() - last;
-
-            long reportMs = 5000;
-            if (dt > reportMs) {
-                double dts = dt / 1000.0;
-                double nkb = n2 / 1024.0;
-                double totalMB = bytesRead / 1024.0 / 1024.0;
-                System.out.println(url2 + " ("
-                        + totalMB + " mb) kb/s:" + nkb / dts + " to " + name);
-                n2 = 0;
-                last = System.currentTimeMillis();
-            }
-            output.write(buffer, 0, n);
-        }
-        output.close();
-        System.out.println("Done:" + url2 + " " + Math.round(bytesRead / 1024.0 / 1024.0) + " mb");
-    }
-
 }

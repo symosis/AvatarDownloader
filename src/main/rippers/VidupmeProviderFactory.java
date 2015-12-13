@@ -1,8 +1,8 @@
-package main2.rippers;
+package main.rippers;
 
-import main2.EpisodeProvider.Status;
-import main2.ProviderFactory;
-import main2.ProviderJob;
+import main.EpisodeProvider.Status;
+import main.ProviderFactory;
+import main.ProviderJob;
 
 public class VidupmeProviderFactory extends ProviderFactory {
     public VidupmeProviderFactory() {

@@ -1,4 +1,4 @@
-package main2;
+package main;
 
 import java.util.ArrayList;
 
@@ -8,8 +8,8 @@ public class RipModel {
     public String name;
     public String url;
 
-    public void addEpisode(String name, String wsUrl) {
-        Episode episode = new Episode(name, wsUrl);
+    public void addEpisode(String name, String period, String wsUrl) {
+        Episode episode = new Episode(name, period, wsUrl);
         episodes.add(episode);
     }
 

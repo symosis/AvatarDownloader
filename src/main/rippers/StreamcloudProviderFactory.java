@@ -1,18 +1,18 @@
-package main2.rippers;
+package main.rippers;
 
-import main2.EpisodeProvider.Status;
-import main2.ProviderFactory;
-import main2.ProviderJob;
+import main.EpisodeProvider.Status;
+import main.ProviderFactory;
+import main.ProviderJob;
 
-public class HappystreamsProviderFactory extends ProviderFactory {
-    public HappystreamsProviderFactory() {
-        parallelism = 10;
+public class StreamcloudProviderFactory extends ProviderFactory {
+    public StreamcloudProviderFactory() {
+        parallelism = 2;
     }
 
     @Override
     public void startWork(ProviderJob providerJob) {
         try {
-            HappystreamsRipper ripper = new HappystreamsRipper(providerJob);
+            StreamcloudRipper ripper = new StreamcloudRipper(providerJob);
         } catch (Throwable e) {
             System.err.println("Error working...");
             e.printStackTrace();

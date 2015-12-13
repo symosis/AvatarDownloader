@@ -1,16 +1,18 @@
-package main2;
+package main;
 
-import main2.EpisodeProvider.Status;
+import main.EpisodeProvider.Status;
 
 import java.util.ArrayList;
 
 public class Episode {
     public ArrayList<EpisodeProvider> providers = new ArrayList<>();
     public String name;
+    public String period;
     public String wsUrl;
 
-    public Episode(String name, String wsUrl) {
+    public Episode(String name, String period, String wsUrl) {
         this.name = name;
+        this.period = period;
         this.wsUrl = wsUrl;
     }
 
