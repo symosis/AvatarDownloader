@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-java -cp bin:lib/* main2.Main3
+javac -d bin -cp src:lib/* src/main/Main3.java
+java -cp bin:lib/* main.Main3
