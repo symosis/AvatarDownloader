@@ -1,5 +1,6 @@
 package main2;
 
+import main2.rippers.HappystreamsProviderFactory;
 import main2.rippers.StreamcloudProviderFactory;
 import main2.rippers.VidupmeProviderFactory;
 
@@ -10,23 +11,25 @@ public class Main3 {
         RipManager manager = new RipManager();
         manager.model = new RipModel();
 
-         addEpisode(manager, 2, 1);
+        manager.model.name = "z-nation_";
+        manager.model.url = "http://watchseries.ag/episode/z-nation-_";
+
+//        addEpisode(manager, 1, 1);
         for (int season = 1; season <= 4; season++) {
             for (int episode = 1; episode <= 30; episode++) {
-//                addEpisode(manager, episode, season);
+                addEpisode(manager, season, episode);
             }
         }
 
         manager.getProviderUrls();
         System.out.println("Complete Provider Cale Urls");
 
-//		http://vidzi.tv/
-//		new ProviderWorker(manager.model, "vidzi.tv", new VidziProviderFactory()).start();
+        new ProviderWorker(manager.model, "happystreams", new HappystreamsProviderFactory()).start();
         new ProviderWorker(manager.model, "streamcloud", new StreamcloudProviderFactory()).start();
         new ProviderWorker(manager.model, "vidup.me", new VidupmeProviderFactory()).start();
     }
 
-    private static void addEpisode(RipManager manager, int episode, int seasonInt) {
+    private static void addEpisode(RipManager manager, int seasonInt, int episode) {
         String season = "" + seasonInt;
         String period = "s" + season + "_e" + episode;
 
@@ -37,6 +40,7 @@ public class Main3 {
 //		manager.model.addEpisode("big_bang_theory_" + periodName, "http://watchseries.ag/episode/big_bang_theory_" + period + ".html");
 //        manager.model.addEpisode("korra_" + periodName, "http://watchseries.ag/episode/the_legend_of_korra_" + period + ".html");
 //        manager.model.addEpisode("avatar_" + periodName, "http://watchseries.ag/episode/avatar:_the_last_airbender_" + period + ".html");
-        manager.model.addEpisode("you_are_the_worst_" + periodName, "http://watchseries.ag/episode/You_re_the_Worst_" + period + ".html");
+//        manager.model.addEpisode("you_are_the_worst_" + periodName, "http://watchseries.ag/episode/You_re_the_Worst_" + period + ".html");
+        manager.model.addEpisode(manager.model.name + periodName, manager.model.url + period + ".html");
     }
 }

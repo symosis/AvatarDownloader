@@ -5,6 +5,9 @@ import java.util.ArrayList;
 public class RipModel {
     public ArrayList<Episode> episodes = new ArrayList<>();
 
+    public String name;
+    public String url;
+
     public void addEpisode(String name, String wsUrl) {
         Episode episode = new Episode(name, wsUrl);
         episodes.add(episode);

@@ -35,6 +35,10 @@ public class ProviderWorker {
                 running = false;
 
             waitPool(pool);
+
+            boolean haltOnFirst = false;
+            if (haltOnFirst)
+                running = false;
         }
 
         System.out.println("Shut down worker: " + providerId);

@@ -28,8 +28,16 @@ public class EpisodeProvider {
     }
 
     public String getFileName() {
+
+        String username = System.getProperty("user.name");
         String name = episode.name;
-        return "/mnt/nfs/share/plex/Series/" + name + "-" + providerId + "-" + index + ".mp4";
+
+        switch (username) {
+            case "nz":
+                return "download/" + name + "-" + providerId + "-" + index + ".mp4";
+            default:
+                return "/mnt/nfs/share/plex/Series/" + name + "-" + providerId + "-" + index + ".mp4";
+        }
     }
 
 }
